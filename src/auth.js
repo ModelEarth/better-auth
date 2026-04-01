@@ -1,7 +1,13 @@
 import { betterAuth } from "better-auth";
 import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
 
-dotenv.config();
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const local = dotenv.config({ path: resolve(__dirname, "../.env") });
+if (local.error) {
+    dotenv.config({ path: resolve(__dirname, "../../docker/.env") });
+}
 
 export const auth = betterAuth({
   // No database configuration - this automatically enables stateless mode
